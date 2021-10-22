@@ -884,7 +884,7 @@ int main()
 								// library, so make a local copy each time, to preserve the original
 								memcpy(tempIV, IVptr, 16);
 
-								if (encryptedCredLength % 16 == 0) {
+								if (encryptedCredLength % 8) {
 									printf("      [ ] The length of the Encrypted Credential indicates that it'a  16-byte block,\n");
 									printf("          and therefore has been encrypted with AES in CBC mode.\n");
 									
@@ -900,11 +900,11 @@ int main()
 										return 0;
 									}
 
-									printf("      [+] Decrypting 3DES succeeded\n");
+									printf("      [+] Decrypting AES succeeded\n");
 									//hexprint(cleartext, encryptedCredLength);
 
 								}
-								else if (encryptedCredLength % 8 == 0) {
+								else {
 									// 3DES CBC mode
 									printf("      [ ] The length of the Encrypted Credential indicates that it'a  8-byte block,\n");
 									printf("          and therefore has been encrypted with 3DES in CBC mode.\n");
@@ -922,10 +922,6 @@ int main()
 
 									printf("      [+] Decrypting 3DES succeeded\n");
 
-								}
-								else {
-									printf("      [!] Encrypted cred is not in either 16 (aes) or 8 (3des) block size!\n");
-									return 1;
 								}
 
 								//hexprint(cleartext, encryptedCredLength);
